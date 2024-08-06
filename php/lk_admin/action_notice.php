@@ -44,6 +44,7 @@
 			$notice[$i]['notice'] = '<span style="color:darkorange">'.$row['login'].'</span> '.$row['notice'];
 			$notice[$i]['date_created'] = $row['date'];
 			$notice[$i]['type_notice'] = $row['type'];
+      $notice[$i]['id'] = $row['id']
 			$i++;
 		}
 		if(count($notice) > 0){
