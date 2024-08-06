@@ -149,6 +149,7 @@
 			$desk_id[] = $row_desc['id_desc'];
 		}
 		$row['desc_id'] = $desk_id;
+    $row['telegram_id'] = isset($row['telegram_id']) ? $row['telegram_id'] : '';
 		
 		echo json_encode(['status'=>'success','data'=>$row]);
 	}
@@ -160,6 +161,7 @@
 		$edit_job_pers = FILTER($_POST['edit_job_pers']);
 		$edit_descript_pers = FILTER($_POST['edit_descript_pers']);
 		$edit_waiter_to_desk_arr = explode(',',$_POST['edit_waiter_to_desk_arr']);
+    $telegram_id = FILTER($_POST['telegram_id']);
 		$data = [];
 
 		$query_d = $link->query("DELETE FROM `service_desc` WHERE `id_waiter` = '$id'");
@@ -173,7 +175,7 @@
 			$row['id_m']++;
 		}
 
-		$query_s = $link->query("UPDATE `personal` SET `email` = '$edit_email_pers', `login` = '$edit_name_pers', `job_title` = '$edit_job_pers', `descript` = '$edit_descript_pers' WHERE `id` = '$id'");
+		$query_s = $link->query("UPDATE `personal` SET `email` = '$edit_email_pers', `login` = '$edit_name_pers', `job_title` = '$edit_job_pers', `descript` = '$edit_descript_pers', `telegram_id` = '$telegram_id' WHERE `id` = '$id'");
 
 		$data['ids'] = $id;
 
