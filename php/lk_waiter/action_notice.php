@@ -116,7 +116,7 @@
 				$notice[$i]['notice'] = '<span style="color:darkorange">'.$row['login'].'</span> '.$row['notice'];
 				$notice[$i]['date_created'] = $row['date'];
 				$notice[$i]['type'] = $row['type'];
-        $notice[$i]['id'] = $row['id']
+        $notice[$i]['id'] = $row['id'];
 				$i++;
 			}
 			$notice['type_notice_list'] = 'lk';
