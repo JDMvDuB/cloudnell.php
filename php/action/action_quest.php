@@ -68,9 +68,11 @@
 
 	if(isset($_POST['get_user_info'])){
 		$id_user = +$_POST['get_user_info'];
+    $telegram_id = +FILTER($_POST['telegram_id']);
+    $manager_telegram_id = +FILTER($_POST['manager_telegram_id']);
 		$get_user = INFO_USER_PERSONAL($link,$id_user);
 
-		$query_s = $link->query("SELECT * FROM `staff_comments` WHERE `id_personal` = '$id_user' AND `views` = '1'");
+		$query_s = $link->query("SELECT * FROM `staff_comments` WHERE `id_personal` = '$id_user' AND `manager_telegram_id` = '$manager_telegram_id' AND `telegram_id` = '$telegram_id' AND `views` = '1'");
 		
 		$comments = [];
 		$i = 0;
