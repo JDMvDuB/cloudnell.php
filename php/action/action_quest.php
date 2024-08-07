@@ -68,12 +68,9 @@
 
 	if(isset($_POST['get_user_info'])){
 		$id_user = +$_POST['get_user_info'];
-    $telegram_id = +FILTER($_POST['telegram_id']);
-    $manager_telegram_id = +FILTER($_POST['manager_telegram_id']);
 		$get_user = INFO_USER_PERSONAL($link,$id_user);
 
-		$query_s = $link->query("SELECT * FROM `staff_comments` WHERE `id_personal` = '$id_user' AND `manager_telegram_id` = '$manager_telegram_id' AND `telegram_id` = '$telegram_id' AND `views` = '1'");
-		
+		$query_s = $link->query("SELECT * FROM `staff_comments` WHERE `id_personal` = '$id_user' AND `views` = '1'");
 		$comments = [];
 		$i = 0;
 		while($row = $query_s->fetch_assoc()){
@@ -85,13 +82,31 @@
 			$i++;
 
 		}
-		
 
-		if(count($get_user) > 0){
-			echo json_encode(['status'=>'success','data'=>$get_user,'comments'=>$comments]);
-		}else{
-			echo json_encode(['status'=>'empty','data'=>[],'comments'=>$comments]);
-		}
+    $get_telegram_ids = $link->query("SELECT `personal`.telegram_id AS 'telegram_id',`manager`.telegram_id AS 'manager_telegram_id' FROM `personal` JOIN `manager` ON `manager`.id_cafe = `personal`.id_cafe WHERE `personal`.id = '$id_user'");
+		
+    if (!$get_telegram_ids) {
+      echo json_encode(['status' => 'error', 'message' => 'Ошибка при получении telegram_id сотрудника и менеджера']);
+      exit;
+    }
+    
+    $telegram_ids = $get_telegram_ids->fetch_assoc();
+    $telegram_id = $telegram_ids['telegram_id'];
+    $manager_telegram_id = $telegram_ids['manager_telegram_id'];
+
+		if (is_array($get_user) && count($get_user) > 0) {
+      echo json_encode([
+          'status' => 'success',
+          'data' => array_merge($get_user, ['telegram_id' => $telegram_id, 'manager_telegram_id' => $manager_telegram_id]),
+          'comments' => $comments
+      ]);
+    } else {
+        echo json_encode([
+            'status' => 'empty',
+            'data' => [],
+            'comments' => $comments
+        ]);
+    }
 	}
 
 	if(isset($_POST['json_send_comments'])){
