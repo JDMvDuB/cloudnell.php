@@ -50,11 +50,11 @@
 			$data[0]['id_desc'] = $id_desc;
 			$data[0]['user_prersonal_id'][] = $row['id'];
       $telegram_ids[] = $row['telegram_id'];
-		}	
+		} 
 
 		$data[0]['id_employees'] = $id_employees;
 
-    $query_m = $link->query("SELECT `telegram_id` FROM `managers` WHERE `id_cafe` = '$id_cafe'");
+    $query_m = $link->query("SELECT `telegram_id` FROM `manager` WHERE `id_cafe` = '$id_cafe'");
     $manager = $query_m->fetch_assoc();
     $manager_telegram_id = $manager['telegram_id'];
 		
