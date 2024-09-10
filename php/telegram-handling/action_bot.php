@@ -6,7 +6,7 @@
 	
   if(isset($_POST['read-message'])) {
     $comment_id = FILTER($_POST['id']);
-    $telegram_id = FILTER($_POST['user_id']);
+    $telegram_id = FILTER($_POST['worker_id']);
 
     $host = 'ws://178.178.96.254:5000';
     $data = json_encode(['comment_id' => $comment_id, 'telegram_id' => $telegram_id]);
